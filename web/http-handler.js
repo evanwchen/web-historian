@@ -23,6 +23,7 @@ var actions = {
           archive.addUrlToList(urlLink, function(data) {
             httpHelpers.serveAssets(response, '/loading.html', function(content) {            
               archive.downloadUrls([urlLink]);
+              archive.writeDataToFile(urlLink);
               httpHelpers.sendResponse(response, content, 302);
             });
           });
