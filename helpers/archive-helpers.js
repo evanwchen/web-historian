@@ -53,9 +53,28 @@ exports.addUrlToList = function(url, callback) {
 };
 
 // should check if a url is archived
-exports.isUrlArchived = function() {
+exports.isUrlArchived = function(url, callback) {
+  //take the url and figure out the path of the hypothetical file
+  fs.readFile(exports.paths.archivedSites + url, function (err, data) {
+    if(err) console.log('error');
+    callback(data);
+  }); 
 };
 
 // should download all pending urls in the list
-exports.downloadUrls = function() {
+exports.downloadUrls = function(urls) {
+  urls.forEach(function(url){
+    fs.writeFile(exports.paths.archivedSites + "/" + url, '', function(err) {
+      if(err) throw err;
+    });
+  });
 };
+
+
+
+
+
+
+
+
+
