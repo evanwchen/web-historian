@@ -13,23 +13,25 @@ var actions = {
     }
   },
   'POST': function(request, response, pathname) {    
-    console.log('fired wrong shit');
     httpHelpers.collectData(request, function(urlLink) {
-      console.log('urlLInk', urlLink);
       archive.isUrlInList(urlLink, function(data) {
         if (data) {
-          httpHelpers.sendResponse(response, data, 302);
+          httpHelpers.serveArchivedSites(response, "/" + urlLink, function(content) {
+            httpHelpers.sendResponse(response, content, 302);
+          });
         } else {
           archive.addUrlToList(urlLink, function(data) {
-            httpHelpers.sendResponse(response, data, 302);
-            archive.downloadUrls([urlLink]);
+            httpHelpers.serveAssets(response, '/loading.html', function(content) {            
+              archive.downloadUrls([urlLink]);
+              httpHelpers.sendResponse(response, content, 302);
+            });
           });
         }
       });
     });
   },
   'OPTIONS': function(request, response) {
-
+    httpHelpers.sendResponse(response);  
   }
 };
 

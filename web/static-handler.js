@@ -26,7 +26,7 @@ var actions = {
 
   },
   'OPTIONS': function(request, response) {
-
+    httpHelpers.sendResponse(respons);  
   }
 };
 

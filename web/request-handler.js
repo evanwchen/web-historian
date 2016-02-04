@@ -20,7 +20,7 @@ var actions = {
   'POST': function(request, response, pathname) {    
   },
   'OPTIONS': function(request, response) {
-
+    httpHelpers.sendResponse(response);  
   }
 };
 
