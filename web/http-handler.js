@@ -12,8 +12,21 @@ var actions = {
       });
     }
   },
-  'POST': function(request, response) {
-
+  'POST': function(request, response, pathname) {    
+    console.log('fired wrong shit');
+    httpHelpers.collectData(request, function(urlLink) {
+      console.log('urlLInk', urlLink);
+      archive.isUrlInList(urlLink, function(data) {
+        if (data) {
+          httpHelpers.sendResponse(response, data, 302);
+        } else {
+          archive.addUrlToList(urlLink, function(data) {
+            httpHelpers.sendResponse(response, data, 302);
+            archive.downloadUrls([urlLink]);
+          });
+        }
+      });
+    });
   },
   'OPTIONS': function(request, response) {
 
@@ -21,8 +34,3 @@ var actions = {
 };
 
 exports.handleRequest = httpHelpers.makeActionHandler(actions);
-
-
-// exports.handleRequest = function (req, res) {
-
-// };

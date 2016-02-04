@@ -7,7 +7,6 @@ var fs = require('fs');
 
 var actions = {
   'GET': function(request, response, pathname) {
-
     archive.isUrlArchived(pathname, function(data) {
       if (data) {
         httpHelpers.serveArchivedSites(response, request.url, function(content) {
@@ -17,10 +16,8 @@ var actions = {
         httpHelpers.sendResponse(response, '', 404);
       }
     });
-
   },
-  'POST': function(request, response) {
-
+  'POST': function(request, response, pathname) {    
   },
   'OPTIONS': function(request, response) {
 

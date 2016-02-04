@@ -31,8 +31,3 @@ var actions = {
 };
 
 exports.handleRequest = httpHelpers.makeActionHandler(actions);
-
-
-// exports.handleRequest = function (req, res) {
-
-// };
