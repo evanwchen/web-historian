@@ -3,19 +3,14 @@ var archive = require('../helpers/archive-helpers');
 var httpHelpers = require('./http-helpers');
 var fs = require('fs');
 
-// require more modules/folders here!
-
 var actions = {
   'GET': function(request, response, pathname) {
-     // else {
-      // if (archive.isUrlInList(request.url)) {
-        httpHelpers.serveArchivedSites(response, request.url, function(content) {
-          httpHelpers.sendResponse(response, content, 200);
-        });
-      // } else {
-      // return 404 error
-      // }
-    // }
+    if (request.url === '/') {
+      request.url = '/index.html';
+      httpHelpers.serveAssets(response, request.url, function(content) {
+        httpHelpers.sendResponse(response, content, 200);
+      });
+    }
   },
   'POST': function(request, response) {
 

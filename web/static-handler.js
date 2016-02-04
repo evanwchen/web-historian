@@ -7,15 +7,20 @@ var fs = require('fs');
 
 var actions = {
   'GET': function(request, response, pathname) {
-     // else {
-      // if (archive.isUrlInList(request.url)) {
-        httpHelpers.serveArchivedSites(response, request.url, function(content) {
-          httpHelpers.sendResponse(response, content, 200);
-        });
-      // } else {
-      // return 404 error
-      // }
-    // }
+    fs.readFile('./public' + pathname, function (err, data) {
+      if (err) throw error;
+      var ext = path.extname(pathname);
+      var contentType;
+      if (ext === '.js') {
+        contentType = 'application/javascript';
+      } else if (ext === '.css') {
+        contentType = 'text/css';
+      }
+
+      httpHelpers.serveAssets(response, request.url, function(content) {
+        httpHelpers.sendResponse(response, content, 200);
+      }, contentType);
+    });
   },
   'POST': function(request, response) {
 

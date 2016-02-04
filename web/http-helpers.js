@@ -14,6 +14,7 @@ exports.serveAssets = function(response, asset, callback) {
   // Write some code here that helps serve up your static files!
   // (Static files are things like html (yours or archived from others...),
   // css, or anything that doesn't change often.)
+
   fs.readFile(archive.paths.siteAssets + asset, function(err, data){
     if (err) throw err;
     callback(data);
@@ -21,17 +22,30 @@ exports.serveAssets = function(response, asset, callback) {
 
 };
 
-exports.sendResponse = function(response, data, statusCode) {
+exports.serveArchivedSites = function(response, asset, callback, flow) {
+  // Write some code here that helps serve up your static files!
+  // (Static files are things like html (yours or archived from others...),
+  // css, or anything that doesn't change often.)
+
+  fs.readFile(archive.paths.archivedSites + asset, function(err, data){
+    if (err) throw err;
+    callback(data);
+  });
+
+};
+
+exports.sendResponse = function(response, data, statusCode, contentType) {
   statusCode = statusCode || 200;
+  headers['Content-Type'] = contentType || headers['Content-Type'];
   response.writeHead(statusCode, headers);
   response.end(data);
 };
 
 exports.makeActionHandler = function(actionMap) {
-  return function(request, response) {
+  return function(request, response, pathname) {
     var action = actionMap[request.method];
     if (action) {
-      action(request, response);
+      action(request, response, pathname);
     } else {
       exports.sendResponse(response, '', 404);
     }

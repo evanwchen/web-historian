@@ -32,7 +32,9 @@ describe("server", function() {
         var fixturePath = archive.paths.archivedSites + "/" + fixtureName;
 
         // Create or clear the file.
-        var fd = fs.openSync(fixturePath, "w");
+        // opens file for writing. file is created (if it does not exist)
+        var fd = fs.openSync(fixturePath, "w"); 
+        // write "google" to fd
         fs.writeSync(fd, "google");
         fs.closeSync(fd);
 
