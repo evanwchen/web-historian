@@ -7,15 +7,17 @@ var fs = require('fs');
 
 var actions = {
   'GET': function(request, response, pathname) {
-     // else {
-      // if (archive.isUrlInList(request.url)) {
+
+    archive.isUrlArchived(pathname, function(data) {
+      if (data) {
         httpHelpers.serveArchivedSites(response, request.url, function(content) {
-          httpHelpers.sendResponse(response, content, 200);
+          httpHelpers.sendResponse(response, content, 200);      
         });
-      // } else {
-      // return 404 error
-      // }
-    // }
+      } else {
+        httpHelpers.sendResponse(response, '', 404);
+      }
+    });
+
   },
   'POST': function(request, response) {
 
@@ -26,8 +28,3 @@ var actions = {
 };
 
 exports.handleRequest = httpHelpers.makeActionHandler(actions);
-
-
-// exports.handleRequest = function (req, res) {
-
-// };

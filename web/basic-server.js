@@ -3,7 +3,7 @@ var url = require('url');
 var archiveHandler = require("./request-handler");
 var staticHandler = require('./static-handler');
 var initialize = require("./initialize.js");
-var httpHandlers = require('./http-handler');
+var httpHandler = require('./http-handler');
 
 // Why do you think we have this here?
 // HINT: It has to do with what's in .gitignore
@@ -13,11 +13,10 @@ var port = 8080;
 var ip = "127.0.0.1";
 
 var router = {
-  '/': httpHandlers.handleRequest,
-  '/index.html': httpHandlers.handleRequest,
+  '/': httpHandler.handleRequest,
+  '/index.html': httpHandler.handleRequest,
   '/styles.css': staticHandler.handleRequest,
   '/favicon.io': staticHandler.handleRequest,
-  '/www.google.com': archiveHandler.handleRequest
 };
 
 var server = http.createServer(function(request, response) {
@@ -26,8 +25,8 @@ var server = http.createServer(function(request, response) {
   if (route) {
     route(request, response, pathname);
   } else {
-    httpHelpers.sendResponse(response, '', 404);
-  }
+    archiveHandler.handleRequest(request, response, pathname);
+  } 
 });
 
 if (module.parent) {
