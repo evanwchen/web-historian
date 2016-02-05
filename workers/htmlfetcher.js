@@ -12,9 +12,12 @@ var http = require('http-request');
 var request = require('request');
 
 exports.fetcher = function(url, callback) {
+  console.log('url',url);
   http.get(url, function(error, response, body) {
     if (error) console.log("it is an error");
-    console.log('this thing worked', response.buffer);
-    callback(response.buffer.toString());
+    console.log('url',url);
+    console.log('response',response);
+
+    callback(response.buffer.toString() );
   });
 };

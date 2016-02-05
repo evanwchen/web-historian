@@ -23,7 +23,7 @@ var actions = {
           archive.addUrlToList(urlLink, function(data) {
             httpHelpers.serveAssets(response, '/loading.html', function(content) {            
               archive.downloadUrls([urlLink]);
-              archive.writeDataToFile(urlLink);
+              // archive.writeDataToFile(urlLink);
               httpHelpers.sendResponse(response, content, 302);
             });
           });
@@ -37,3 +37,5 @@ var actions = {
 };
 
 exports.handleRequest = httpHelpers.makeActionHandler(actions);
+
+// archive.downloadAll();

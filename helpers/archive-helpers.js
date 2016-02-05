@@ -2,6 +2,7 @@ var fs = require('fs');
 var path = require('path');
 var _ = require('underscore');
 var htmlFetcher = require('../workers/htmlfetcher.js');
+var CronJob = require('cron').CronJob;
 
 /*
  * You will need to reuse the same paths many times over in the course of this sprint.
@@ -79,6 +80,27 @@ exports.writeDataToFile = function(url) {
     }); 
   });
 };
+
+// exports.downloadAll = function(urls){
+//   for (var i = 0; i < urls.length; i++) {
+//     exports.writeDataToFile(urls[i]);
+//   }
+// };
+
+// function that will go through each site in archives/sites, and invoke writeDataToFile
+// exports.downloadAll = function () {
+//   var job = new CronJob('0 * * * * *', function() {
+//       exports.readListOfUrls(function(urls){
+//         for (var i = 0; i < urls.length; i++) {
+//           exports.writeDataToFile(urls[i]);
+//         }
+//       });
+//     }, 
+//     null,
+//     true, /* Start the job right now */
+//     'America/Los_Angeles' /* Time zone of this job. */
+//   );
+// };
 
 
 

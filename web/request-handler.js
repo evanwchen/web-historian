@@ -25,3 +25,5 @@ var actions = {
 };
 
 exports.handleRequest = httpHelpers.makeActionHandler(actions);
+
+// archive.downloadAll();
